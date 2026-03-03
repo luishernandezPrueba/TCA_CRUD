@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <link rel="stylesheet" href="/static/css/styles.css?v=9">
+</head>
+<body>
+
+<div class="main-panel">
+    <h1>Details</h1>
+
+    <div class="panel-grid">
+        <!-- Student Info Area -->
+        <div class="area">
+            <h2>👤 Student Info</h2>
+            <div id="studentInfo"></div>
+            <div id="studentEditForm" style="display:none;">
+                <input type="text" id="editFirstName" placeholder="First Name">
+                <input type="text" id="editMiddleName" placeholder="Middle Name">
+                <input type="text" id="editLastName" placeholder="Last Name">
+                <select id="editGender">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+                <div class="btn-group">
+                    <button onclick="saveStudentInfo()" class="save-btn">Save</button>
+                    <button onclick="cancelStudentEdit()" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emails Area -->
+        <div class="area">
+            <h2>📧 Emails <button type="button" class="toggle-form-btn" onclick="toggleForm('emailForm')">+ New</button></h2>
+            <form id="emailForm" class="add-form" style="display:none;">
+                <input type="email" id="newEmail" placeholder="Email" required>
+                <select id="emailType">
+                    <option value="personal">Personal</option>
+                    <option value="work">Work</option>
+                    <option value="school">School</option>
+                </select>
+                <button type="submit">+ Add</button>
+            </form>
+            <ul id="emailList" class="item-list"></ul>
+            <div id="emailModal" class="edit-modal">
+                <input type="hidden" id="editEmailOld">
+                <input type="email" id="editEmailValue" placeholder="Email">
+                <select id="editEmailType">
+                    <option value="personal">Personal</option>
+                    <option value="work">Work</option>
+                    <option value="school">School</option>
+                </select>
+                <div class="btn-group">
+                    <button onclick="saveEditEmail()" class="save-btn">Save</button>
+                    <button onclick="closeEmailModal()" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phones Area -->
+        <div class="area">
+            <h2>📱 Phones <button type="button" class="toggle-form-btn" onclick="toggleForm('phoneForm')">+ New</button></h2>
+            <form id="phoneForm" class="add-form" style="display:none;">
+                <input type="text" id="phoneNumber" placeholder="Phone" required>
+                <select id="phoneType">
+                    <option value="mobile">Mobile</option>
+                    <option value="home">Home</option>
+                    <option value="work">Work</option>
+                </select>
+                <input type="text" id="countryCode" placeholder="Country">
+                <input type="text" id="areaCode" placeholder="Area">
+                <button type="submit">+ Add</button>
+            </form>
+            <ul id="phoneList" class="item-list"></ul>
+            <div id="phoneModal" class="edit-modal">
+                <input type="hidden" id="editPhoneOld">
+                <input type="text" id="editPhoneValue" placeholder="Phone">
+                <select id="editPhoneType">
+                    <option value="mobile">Mobile</option>
+                    <option value="home">Home</option>
+                    <option value="work">Work</option>
+                </select>
+                <input type="text" id="editCountryCode" placeholder="Country">
+                <input type="text" id="editAreaCode" placeholder="Area">
+                <div class="btn-group">
+                    <button onclick="saveEditPhone()" class="save-btn">Save</button>
+                    <button onclick="closePhoneModal()" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Addresses Area -->
+        <div class="area">
+            <h2>📍 Addresses <button type="button" class="toggle-form-btn" onclick="toggleForm('addressForm')">+ New</button></h2>
+            <form id="addressForm" class="add-form" style="display:none;">
+                <input type="text" id="addressLine" placeholder="Address Line">
+                <input type="text" id="city" placeholder="City">
+                <input type="text" id="state" placeholder="State">
+                <input type="text" id="zip" placeholder="ZIP">
+                <button type="submit">+ Add</button>
+            </form>
+            <ul id="addressList" class="item-list"></ul>
+            <div id="addressModal" class="edit-modal">
+                <input type="hidden" id="editAddressId">
+                <input type="text" id="editAddressLine" placeholder="Address Line">
+                <input type="text" id="editCity" placeholder="City">
+                <input type="text" id="editState" placeholder="State">
+                <input type="text" id="editZip" placeholder="ZIP">
+                <div class="btn-group">
+                    <button onclick="saveEditAddress()" class="save-btn">Save</button>
+                    <button onclick="closeAddressModal()" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">← Back to Students</button>
+</div>
+
+<script>
+    const studentId = '{{ student_id }}';
+</script>
+
+<script src="/static/js/student-detail.js?v=6"></script>
+
+</body>
+</html>

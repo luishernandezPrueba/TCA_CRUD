@@ -1,0 +1,633 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Main Panel - One unified container */
+.main-panel {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.main-panel h1 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 15px;
+}
+
+/* Panel Grid - 2x2 areas */
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+/* Area styling */
+.area {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.area h2 {
+    color: #667eea;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-form-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.toggle-form-btn:hover {
+    background: #5a6fd6;
+}
+
+/* Area Header - for combined layouts */
+.area-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left h2 {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.search-inline {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.search-inline input {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 13px;
+    width: 160px;
+}
+
+.search-inline button {
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+/* Student Info display */
+#studentInfo {
+    line-height: 1.8;
+}
+
+#studentInfo .info-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+#studentInfo .info-label {
+    font-weight: 600;
+    color: #555;
+    min-width: 100px;
+}
+
+#studentInfo .info-value {
+    color: #333;
+}
+
+#studentEditForm {
+    margin-top: 10px;
+}
+
+#studentEditForm input,
+#studentEditForm select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Forms */
+.add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.add-form input,
+.add-form select {
+    flex: 1;
+    min-width: 70px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.add-form input:focus,
+.add-form select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.add-form button {
+    padding: 8px 14px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.add-form button:hover {
+    background: #5a6fd6;
+}
+
+/* Item Lists */
+.item-list {
+    list-style: none;
+}
+
+.item-list li {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.item-list li .item-info {
+    margin-bottom: 8px;
+}
+
+.item-list li .item-row {
+    display: flex;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.item-list li .item-label {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 80px;
+}
+
+.item-list li .item-value {
+    color: #333;
+}
+
+.item-list li .item-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table th {
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+}
+
+.data-table tbody tr:hover {
+    background: #f5f6fa;
+}
+
+.data-table td button {
+    margin-right: 5px;
+}
+
+/* Buttons */
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.2s;
+    background: #667eea;
+    color: white;
+}
+
+button:hover {
+    background: #5a6fd6;
+}
+
+.edit-btn {
+    background: #3498db;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #2980b9;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+.save-btn {
+    background: #27ae60;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #219a52;
+}
+
+.cancel-btn {
+    background: #95a5a6;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #7f8c8d;
+}
+
+.btn-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Edit Modal */
+.edit-modal {
+    display: none;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.edit-modal input,
+.edit-modal select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+/* Back Button */
+.back-btn {
+    display: block;
+    margin: 40px auto 0;
+    padding: 12px 30px;
+    background: #333;
+    color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Table Styles (for index page) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: #667eea;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+td {
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .panel-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .add-form {
+        flex-direction: column;
+    }
+    
+    .add-form input,
+    .add-form select {
+        width: 100%;
+    }
+}
+
+#studentInfo {
+    font-size: 1.4em;
+    color: #333;
+    text-align: center;
+}
+
+#studentInfo .student-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+#studentInfo .student-details {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Forms */
+.add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.add-form input,
+.add-form select {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.add-form input:focus,
+.add-form select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.add-form button {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Item Lists */
+.item-list {
+    list-style: none;
+}
+
+.item-list li {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+    transition: background 0.2s;
+}
+
+.item-list li:hover {
+    background: #eef1f5;
+}
+
+.item-list li .item-info {
+    margin-bottom: 10px;
+}
+
+.item-list li .item-row {
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.item-list li .item-label {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 100px;
+}
+
+.item-list li .item-value {
+    color: #333;
+}
+
+.item-list li .item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Action Buttons */
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.edit-btn {
+    background: #3498db;
+    color: white;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+.edit-btn:hover {
+    background: #2980b9;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    padding: 20px;
+}
+
+.modal h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.modal input:focus,
+.modal select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+    flex: 1;
+}
+
+.save-btn:hover {
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+}
+
+.cancel-btn {
+    background: #95a5a6;
+    color: white;
+    flex: 1;
+}
+
+.cancel-btn:hover {
+    background: #7f8c8d;
+}
+
+/* Back Button */
+.back-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 15px 40px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Table Styles (for index page) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .add-form {
+        flex-direction: column;
+    }
+    
+    .add-form input,
+    .add-form select {
+        width: 100%;
+    }
+}
+
