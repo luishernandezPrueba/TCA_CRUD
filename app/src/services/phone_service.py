@@ -64,6 +64,11 @@ async def update_phone(phone_id: int, phone_data: phoneUpdate, db: AsyncSession)
         if phone is None:
             raise HTTPException(status_code=404, detail="Phone not found")
         
+        if phone_data.phone and phone_data.phone != phone.phone:
+            duplicate = await db.execute(select(Phone).where(Phone.phone == phone_data.phone))
+            if duplicate.scalar_one_or_none() is not None:
+                raise HTTPException(status_code=400, detail=f"Phone {phone_data.phone} already exists")
+        
         for key, value in phone_data.model_dump(exclude_unset=True).items():
             setattr(phone, key, value)
 

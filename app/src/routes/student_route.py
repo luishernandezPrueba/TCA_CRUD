@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from services.student_service import create_student, delete_student, get_all_students, get_student_by_id, get_student_by_last_name, update_student
 from database.database import get_db

@@ -35,7 +35,7 @@ async def get_all_emails(db:AsyncSession, skip: int = 0, limit: int = 100):
     except Exception as e:
         raise HTTPException(500, detail=str(e))
     
-    
+
 async def get_emails_by_student_id(student_id: int, db: AsyncSession):
     try:
         result = await db.execute(select(Email).where(Email.student_id == student_id))
@@ -50,16 +50,21 @@ async def get_emails_by_student_id(student_id: int, db: AsyncSession):
 async def update_email(email: str, email_data: emailUpdate, db: AsyncSession):
     try:
         result = await db.execute(select(Email).where(Email.email == email))
-        email = result.scalar_one_or_none()
-        if email is None:
+        db_email = result.scalar_one_or_none()
+        if db_email is None:
             raise HTTPException(status_code=404, detail="Email not found")
         
+        if email_data.email and email_data.email != email:
+            duplicate = await db.execute(select(Email).where(Email.email == email_data.email))
+            if duplicate.scalar_one_or_none() is not None:
+                raise HTTPException(status_code=400, detail=f"Email {email_data.email} already exists")
+        
         for key, value in email_data.model_dump(exclude_unset=True).items():
-            setattr(email, key, value)
+            setattr(db_email, key, value)
 
         await db.commit()
-        await db.refresh(email)
-        return email
+        await db.refresh(db_email)
+        return db_email
     except HTTPException:
         raise
     except Exception as e:
@@ -68,11 +73,11 @@ async def update_email(email: str, email_data: emailUpdate, db: AsyncSession):
 async def delete_email(email: str, db: AsyncSession):
     try:
         result = await db.execute(select(Email).where(Email.email == email))
-        email = result.scalar_one_or_none()
-        if email is None:
+        db_email = result.scalar_one_or_none()
+        if db_email is None:
             raise HTTPException(status_code=404, detail="Email not found")
         
-        await db.delete(email)
+        await db.delete(db_email)
         await db.commit()
         return {"detail": "Email deleted successfully"}
     except HTTPException:

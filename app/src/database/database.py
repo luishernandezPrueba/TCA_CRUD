@@ -5,10 +5,8 @@ import os
 
 load_dotenv()
 
-# Railway uses MYSQL_URL for MySQL databases
 DATABASE_URL = os.getenv("MYSQL_URL") or os.getenv("DATABASE_URL")
 
-# Railway provides mysql:// but asyncmy needs mysql+asyncmy://
 if DATABASE_URL and DATABASE_URL.startswith("mysql://"):
     DATABASE_URL = DATABASE_URL.replace("mysql://", "mysql+asyncmy://", 1)
 

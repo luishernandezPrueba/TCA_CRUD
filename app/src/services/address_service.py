@@ -12,7 +12,7 @@ async def create_address(address_data: addressCreate, db: AsyncSession):
 
         validate_student = await db.execute(select(Student).where(Student.student_id == db_address.student_id))
         if validate_student.scalar_one_or_none() is None:
-            raise HTTPException(status_code=404, detail=f"Student with id {db_address.student_id} not found")
+            raise HTTPException(status_code=404, detail="Student not found")
 
         db.add(db_address)
         await db.commit()
@@ -75,7 +75,7 @@ async def update_address(address_id: int, address_data: addressUpdate, db: Async
         if address is None:
             raise HTTPException(status_code=404, detail="Address not found")
         
-        for key, value in address_data.model_dump().items():
+        for key, value in address_data.model_dump(exclude_unset=True).items():
             setattr(address, key, value)
         await db.commit()
         await db.refresh(address)

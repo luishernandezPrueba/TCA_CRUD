@@ -7,115 +7,115 @@
 <body>
 
 <div class="main-panel">
-    <h1>Details</h1>
+    <h1>Detalles del estudiante</h1>
 
     <div class="panel-grid">
         <!-- Student Info Area -->
         <div class="area">
-            <h2>👤 Student Info</h2>
+            <h2>👤 Información del estudiante</h2>
             <div id="studentInfo"></div>
             <div id="studentEditForm" style="display:none;">
-                <input type="text" id="editFirstName" placeholder="First Name">
-                <input type="text" id="editMiddleName" placeholder="Middle Name">
-                <input type="text" id="editLastName" placeholder="Last Name">
+                <input type="text" id="editFirstName" placeholder="Nombre">
+                <input type="text" id="editMiddleName" placeholder="Segundo Nombre">
+                <input type="text" id="editLastName" placeholder="Apellido">
                 <select id="editGender">
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="O">Other</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="O">Otro</option>
                 </select>
                 <div class="btn-group">
-                    <button onclick="saveStudentInfo()" class="save-btn">Save</button>
-                    <button onclick="cancelStudentEdit()" class="cancel-btn">Cancel</button>
+                    <button onclick="saveStudentInfo()" class="save-btn">Guardar</button>
+                    <button onclick="cancelStudentEdit()" class="cancel-btn">Cancelar</button>
                 </div>
             </div>
         </div>
 
         <!-- Emails Area -->
         <div class="area">
-            <h2>📧 Emails <button type="button" class="toggle-form-btn" onclick="toggleForm('emailForm')">+ New</button></h2>
+            <h2>Correos electrónicos <button type="button" class="toggle-form-btn" onclick="toggleForm('emailForm')">+ Nuevo</button></h2>
             <form id="emailForm" class="add-form" style="display:none;">
-                <input type="email" id="newEmail" placeholder="Email" required>
+                <input type="email" id="newEmail" placeholder="Correo electrónico" required>
                 <select id="emailType">
                     <option value="personal">Personal</option>
-                    <option value="work">Work</option>
-                    <option value="school">School</option>
+                    <option value="work">Trabajo</option>
+                    <option value="school">Escolar</option>
                 </select>
-                <button type="submit">+ Add</button>
+                <button type="submit">+ Añadir</button>
             </form>
             <ul id="emailList" class="item-list"></ul>
             <div id="emailModal" class="edit-modal">
                 <input type="hidden" id="editEmailOld">
-                <input type="email" id="editEmailValue" placeholder="Email">
+                <input type="email" id="editEmailValue" placeholder="Correo electrónico">
                 <select id="editEmailType">
                     <option value="personal">Personal</option>
-                    <option value="work">Work</option>
-                    <option value="school">School</option>
+                    <option value="work">Trabajo</option>
+                    <option value="school">Escolar</option>
                 </select>
                 <div class="btn-group">
-                    <button onclick="saveEditEmail()" class="save-btn">Save</button>
-                    <button onclick="closeEmailModal()" class="cancel-btn">Cancel</button>
+                    <button onclick="saveEditEmail()" class="save-btn">Guardar</button>
+                    <button onclick="closeEmailModal()" class="cancel-btn">Cancelar</button>
                 </div>
             </div>
         </div>
 
         <!-- Phones Area -->
         <div class="area">
-            <h2>📱 Phones <button type="button" class="toggle-form-btn" onclick="toggleForm('phoneForm')">+ New</button></h2>
+            <h2> Teléfonos <button type="button" class="toggle-form-btn" onclick="toggleForm('phoneForm')">+ Nuevo</button></h2>
             <form id="phoneForm" class="add-form" style="display:none;">
-                <input type="text" id="phoneNumber" placeholder="Phone" required>
+                <input type="text" id="phoneNumber" placeholder="Teléfono" required>
                 <select id="phoneType">
-                    <option value="mobile">Mobile</option>
-                    <option value="home">Home</option>
-                    <option value="work">Work</option>
+                    <option value="mobile">Móvil</option>
+                    <option value="home">Casa</option>
+                    <option value="work">Trabajo</option>
                 </select>
-                <input type="text" id="countryCode" placeholder="Country">
-                <input type="text" id="areaCode" placeholder="Area">
-                <button type="submit">+ Add</button>
+                <input type="text" id="countryCode" placeholder="País">
+                <input type="text" id="areaCode" placeholder="Área">
+                <button type="submit">+ Añadir</button>
             </form>
             <ul id="phoneList" class="item-list"></ul>
             <div id="phoneModal" class="edit-modal">
                 <input type="hidden" id="editPhoneOld">
-                <input type="text" id="editPhoneValue" placeholder="Phone">
+                <input type="text" id="editPhoneValue" placeholder="Teléfono">
                 <select id="editPhoneType">
-                    <option value="mobile">Mobile</option>
-                    <option value="home">Home</option>
-                    <option value="work">Work</option>
+                    <option value="mobile">Móvil</option>
+                    <option value="home">Casa</option>
+                    <option value="work">Trabajo</option>
                 </select>
-                <input type="text" id="editCountryCode" placeholder="Country">
-                <input type="text" id="editAreaCode" placeholder="Area">
+                <input type="text" id="editCountryCode" placeholder="País">
+                <input type="text" id="editAreaCode" placeholder="Área">
                 <div class="btn-group">
-                    <button onclick="saveEditPhone()" class="save-btn">Save</button>
-                    <button onclick="closePhoneModal()" class="cancel-btn">Cancel</button>
+                    <button onclick="saveEditPhone()" class="save-btn">Guardar</button>
+                    <button onclick="closePhoneModal()" class="cancel-btn">Cancelar</button>
                 </div>
             </div>
         </div>
 
         <!-- Addresses Area -->
         <div class="area">
-            <h2>📍 Addresses <button type="button" class="toggle-form-btn" onclick="toggleForm('addressForm')">+ New</button></h2>
+            <h2> Direcciones <button type="button" class="toggle-form-btn" onclick="toggleForm('addressForm')">+ Nuevo</button></h2>
             <form id="addressForm" class="add-form" style="display:none;">
-                <input type="text" id="addressLine" placeholder="Address Line">
-                <input type="text" id="city" placeholder="City">
-                <input type="text" id="state" placeholder="State">
-                <input type="text" id="zip" placeholder="ZIP">
-                <button type="submit">+ Add</button>
+                <input type="text" id="addressLine" placeholder="Dirección">
+                <input type="text" id="city" placeholder="Ciudad">
+                <input type="text" id="state" placeholder="Estado">
+                <input type="text" id="zip" placeholder="Código Postal">
+                <button type="submit">+ Añadir</button>
             </form>
             <ul id="addressList" class="item-list"></ul>
             <div id="addressModal" class="edit-modal">
                 <input type="hidden" id="editAddressId">
-                <input type="text" id="editAddressLine" placeholder="Address Line">
-                <input type="text" id="editCity" placeholder="City">
-                <input type="text" id="editState" placeholder="State">
-                <input type="text" id="editZip" placeholder="ZIP">
+                <input type="text" id="editAddressLine" placeholder="Dirección">
+                <input type="text" id="editCity" placeholder="Ciudad">
+                <input type="text" id="editState" placeholder="Estado">
+                <input type="text" id="editZip" placeholder="Código Postal">
                 <div class="btn-group">
-                    <button onclick="saveEditAddress()" class="save-btn">Save</button>
-                    <button onclick="closeAddressModal()" class="cancel-btn">Cancel</button>
+                    <button onclick="saveEditAddress()" class="save-btn">Guardar</button>
+                    <button onclick="closeAddressModal()" class="cancel-btn">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <button class="back-btn" onclick="goBack()">← Back to Students</button>
+    <button class="back-btn" onclick="goBack()">← Volver a Estudiantes</button>
 </div>
 
 <script>

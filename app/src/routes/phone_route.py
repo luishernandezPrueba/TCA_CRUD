@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from services.phone_service import create_phone, delete_phone, get_all_phones, get_phone_by_id, get_phones_by_student_id, update_phone
 from database.database import get_db
