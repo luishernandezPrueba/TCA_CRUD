@@ -36,6 +36,14 @@ function toggleForm(formId) {
     form.style.display = form.style.display === "none" ? "flex" : "none";
 }
 
+function validateMaxLength(value, max, fieldName) {
+    if (value && value.length > max) {
+        alert(`${fieldName} no puede tener más de ${max} caracteres.`);
+        return false;
+    }
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     loadStudent();
     loadEmails();
@@ -55,7 +63,8 @@ async function createEmail(e) {
         email_type: document.getElementById("emailType").value,
         student_id: studentId
     };
-    console.log("creating email", data);
+
+    if (!validateMaxLength(email, 100, "Correo")) return;
 
     const resp = await fetch(`${API_BASE}/emails`, {
         method: "POST",
@@ -85,6 +94,14 @@ async function createPhone(e) {
         student_id: studentId
     };
 
+    if (
+        !validateMaxLength(data.phone, 30, "Teléfono") ||
+        !validateMaxLength(data.countryCode, 5, "Código país") ||
+        !validateMaxLength(data.areaCode, 5, "Código área")
+    ) {
+        return;
+    }
+
     const resp = await fetch(`${API_BASE}/phones`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,6 +129,13 @@ async function createAddress(e) {
         zip_postcode: document.getElementById("zip").value,
         student_id: studentId
     };
+
+    if (
+        !validateMaxLength(data.addressLine, 100, "Dirección") ||
+        !validateMaxLength(data.city, 45, "Ciudad") ||
+        !validateMaxLength(data.state, 45, "Estado") ||
+        !validateMaxLength(data.zip, 45, "Código postal")
+    ) return;
 
     const resp = await fetch(`${API_BASE}/addresses`, {
         method: "POST",
@@ -164,6 +188,12 @@ async function saveStudentInfo() {
         last_name: document.getElementById("editLastName").value,
         gender: document.getElementById("editGender").value
     };
+
+    if (
+        !validateMaxLength(data.first_name, 45, "Nombre") ||
+        !validateMaxLength(data.middle_name, 45, "Segundo nombre") ||
+        !validateMaxLength(data.last_name, 45, "Apellido")
+    ) return;
 
     const resp = await fetch(`${API_BASE}/students/${studentId}`, {
         method: "PATCH",
