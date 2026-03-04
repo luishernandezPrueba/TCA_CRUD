@@ -19,6 +19,46 @@ const GENDER_ES = {
     "other": "Otro"
 };
 
+const FIELD_LABELS = {
+    phone: "Teléfono",
+    country_code: "Código país",
+    area_code: "Código área",
+    email: "Correo",
+    first_name: "Nombre",
+    middle_name: "Segundo nombre",
+    last_name: "Apellido",
+    address_line: "Dirección",
+    city: "Ciudad",
+    state: "Estado",
+    zip_postcode: "Código postal"
+};
+
+async function handleErrorResponse(resp) {
+    try {
+        error = await resp.json();
+    } catch {
+        return "Ocurrió un error inesperado.";
+    }
+    
+    if (Array.isArray(error.detail)) {
+        return error.detail.map(e => {
+            const rawField = e.loc?.[1];
+            const field = FIELD_LABELS[rawField] || rawField;
+
+            if (e.type === "string_too_long") {
+                return `${field} no puede tener más de ${e.ctx?.max_length} caracteres.`;
+            }
+
+            return e.msg;
+        }).join("\n");
+    }
+    if (typeof error.detail === "string") {
+        return error.detail;
+    }
+
+    return "Ocurrió un error inesperado.";
+}
+
 function translatePhoneType(type) {
     return PHONE_TYPE_ES[type] || type;
 }
@@ -34,14 +74,6 @@ function translateGender(gender) {
 function toggleForm(formId) {
     const form = document.getElementById(formId);
     form.style.display = form.style.display === "none" ? "flex" : "none";
-}
-
-function validateMaxLength(value, max, fieldName) {
-    if (value && value.length > max) {
-        alert(`${fieldName} no puede tener más de ${max} caracteres.`);
-        return false;
-    }
-    return true;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -64,8 +96,6 @@ async function createEmail(e) {
         student_id: studentId
     };
 
-    if (!validateMaxLength(email, 100, "Correo")) return;
-
     const resp = await fetch(`${API_BASE}/emails`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,8 +103,8 @@ async function createEmail(e) {
     });
 
     if (!resp.ok) {
-        const error = await resp.json();
-        alert(error.detail || "No se pudo crear el correo");
+        const message = await handleErrorResponse(resp);
+        alert(message);
         return;
     }
     
@@ -94,14 +124,6 @@ async function createPhone(e) {
         student_id: studentId
     };
 
-    if (
-        !validateMaxLength(data.phone, 30, "Teléfono") ||
-        !validateMaxLength(data.countryCode, 5, "Código país") ||
-        !validateMaxLength(data.areaCode, 5, "Código área")
-    ) {
-        return;
-    }
-
     const resp = await fetch(`${API_BASE}/phones`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,8 +131,8 @@ async function createPhone(e) {
     });
     
     if (!resp.ok) {
-        const error = await resp.json();
-        alert(error.detail || "No se pudo crear el teléfono");
+        const message = await handleErrorResponse(resp);
+        alert(message);
         return;
     }
     
@@ -130,20 +152,15 @@ async function createAddress(e) {
         student_id: studentId
     };
 
-    if (
-        !validateMaxLength(data.addressLine, 100, "Dirección") ||
-        !validateMaxLength(data.city, 45, "Ciudad") ||
-        !validateMaxLength(data.state, 45, "Estado") ||
-        !validateMaxLength(data.zip, 45, "Código postal")
-    ) return;
-
     const resp = await fetch(`${API_BASE}/addresses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
     if (!resp.ok) {
-        console.error("Failed to create address", await resp.text());
+        const message = await handleErrorResponse(resp);
+        alert(message);
+        return;
     } else {
         document.getElementById("addressForm").style.display = "none";
     }
@@ -152,7 +169,6 @@ async function createAddress(e) {
     loadAddresses();
 }
 
-// helper functions to load existing data
 async function loadStudent() {
     const res = await fetch(`${API_BASE}/students/${studentId}`);
     if (!res.ok) return;
@@ -189,20 +205,16 @@ async function saveStudentInfo() {
         gender: document.getElementById("editGender").value
     };
 
-    if (
-        !validateMaxLength(data.first_name, 45, "Nombre") ||
-        !validateMaxLength(data.middle_name, 45, "Segundo nombre") ||
-        !validateMaxLength(data.last_name, 45, "Apellido")
-    ) return;
-
     const resp = await fetch(`${API_BASE}/students/${studentId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
-
+    
     if (!resp.ok) {
-        alert("No se pudo actualizar la información del estudiante");
+        const message = await handleErrorResponse(resp);
+        alert(message);
+        return;
     } else {
         cancelStudentEdit();
         loadStudent();
@@ -282,7 +294,6 @@ async function loadAddresses() {
     }
 }
 
-// Email edit/delete functions
 function openEmailEditModal(email, emailType) {
     document.getElementById("editEmailOld").value = email;
     document.getElementById("editEmailValue").value = email;
@@ -306,7 +317,9 @@ async function saveEditEmail() {
     });
 
     if (!resp.ok) {
-        alert("No se pudo actualizar el correo");
+        const message = await handleErrorResponse(resp);
+        alert(message);
+        return;
     } else {
         closeEmailModal();
         loadEmails();
@@ -360,7 +373,9 @@ async function saveEditPhone() {
     });
 
     if (!resp.ok) {
-        alert("No se pudo actualizar el teléfono");
+        const message = await handleErrorResponse(resp);
+        alert(message);
+        return;
     } else {
         closePhoneModal();
         loadPhones();
@@ -415,7 +430,9 @@ async function saveEditAddress() {
     });
 
     if (!resp.ok) {
-        alert("No se pudo actualizar la dirección");
+        const message = await handleErrorResponse(resp);
+        alert(message);
+        return;
     } else {
         closeAddressModal();
         loadAddresses();
