@@ -1,5 +1,36 @@
 const API_BASE = "/api/v1";
 
+// Mapeo de traducciones
+const PHONE_TYPE_ES = {
+    "mobile": "Móvil",
+    "home": "Casa",
+    "work": "Trabajo"
+};
+
+const EMAIL_TYPE_ES = {
+    "personal": "Personal",
+    "work": "Trabajo",
+    "school": "Escuela"
+};
+
+const GENDER_ES = {
+    "male": "Masculino",
+    "female": "Femenino",
+    "other": "Otro"
+};
+
+function translatePhoneType(type) {
+    return PHONE_TYPE_ES[type] || type;
+}
+
+function translateEmailType(type) {
+    return EMAIL_TYPE_ES[type] || type;
+}
+
+function translateGender(gender) {
+    return GENDER_ES[gender] || gender;
+}
+
 function toggleForm(formId) {
     const form = document.getElementById(formId);
     form.style.display = form.style.display === "none" ? "flex" : "none";
@@ -34,7 +65,7 @@ async function createEmail(e) {
 
     if (!resp.ok) {
         const error = await resp.json();
-        alert(error.detail || "Could not create email");
+        alert(error.detail || "No se pudo crear el correo");
         return;
     }
     
@@ -62,7 +93,7 @@ async function createPhone(e) {
     
     if (!resp.ok) {
         const error = await resp.json();
-        alert(error.detail || "Could not create phone");
+        alert(error.detail || "No se pudo crear el teléfono");
         return;
     }
     
@@ -104,11 +135,11 @@ async function loadStudent() {
     const student = await res.json();
     const infoEl = document.getElementById("studentInfo");
     infoEl.innerHTML = `
-        <div class="info-row"><span class="info-label">First Name:</span><span class="info-value">${student.first_name || ''}</span></div>
-        <div class="info-row"><span class="info-label">Middle Name:</span><span class="info-value">${student.middle_name || ''}</span></div>
-        <div class="info-row"><span class="info-label">Last Name:</span><span class="info-value">${student.last_name || ''}</span></div>
-        <div class="info-row"><span class="info-label">Gender:</span><span class="info-value">${student.gender}</span></div>
-        <button class="edit-btn" onclick="openStudentEdit('${student.first_name || ''}', '${student.middle_name || ''}', '${student.last_name || ''}', '${student.gender}')" style="margin-top:10px;">Edit</button>
+        <div class="info-row"><span class="info-label">Nombre:</span><span class="info-value">${student.first_name || ''}</span></div>
+        <div class="info-row"><span class="info-label">Segundo Nombre:</span><span class="info-value">${student.middle_name || ''}</span></div>
+        <div class="info-row"><span class="info-label">Apellido:</span><span class="info-value">${student.last_name || ''}</span></div>
+        <div class="info-row"><span class="info-label">Género:</span><span class="info-value">${translateGender(student.gender)}</span></div>
+        <button class="edit-btn" onclick="openStudentEdit('${student.first_name || ''}', '${student.middle_name || ''}', '${student.last_name || ''}', '${student.gender}')" style="margin-top:10px;">Editar</button>
     `;
 }
 
@@ -141,7 +172,7 @@ async function saveStudentInfo() {
     });
 
     if (!resp.ok) {
-        alert("Failed to update student info");
+        alert("No se pudo actualizar la información del estudiante");
     } else {
         cancelStudentEdit();
         loadStudent();
@@ -158,12 +189,12 @@ async function loadEmails() {
             const li = document.createElement("li");
             li.innerHTML = `
                 <div class="item-info">
-                    <div class="item-row"><span class="item-label">Email:</span><span class="item-value">${e.email}</span></div>
-                    <div class="item-row"><span class="item-label">Type:</span><span class="item-value">${e.email_type}</span></div>
+                    <div class="item-row"><span class="item-label">Correo:</span><span class="item-value">${e.email}</span></div>
+                    <div class="item-row"><span class="item-label">Tipo:</span><span class="item-value">${translateEmailType(e.email_type)}</span></div>
                 </div>
                 <div class="item-actions">
-                    <button class="edit-btn" onclick="openEmailEditModal('${e.email}', '${e.email_type}')">Edit</button>
-                    <button class="delete-btn" onclick="deleteEmail('${e.email}')">Delete</button>
+                    <button class="edit-btn" onclick="openEmailEditModal('${e.email}', '${e.email_type}')">Editar</button>
+                    <button class="delete-btn" onclick="deleteEmail('${e.email}')">Eliminar</button>
                 </div>
             `;
             list.appendChild(li);
@@ -181,14 +212,14 @@ async function loadPhones() {
             const li = document.createElement("li");
             li.innerHTML = `
                 <div class="item-info">
-                    <div class="item-row"><span class="item-label">Phone:</span><span class="item-value">${p.phone}</span></div>
-                    <div class="item-row"><span class="item-label">Type:</span><span class="item-value">${p.phone_type}</span></div>
-                    <div class="item-row"><span class="item-label">Country:</span><span class="item-value">${p.country_code || 'N/A'}</span></div>
-                    <div class="item-row"><span class="item-label">Area:</span><span class="item-value">${p.area_code || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Teléfono:</span><span class="item-value">${p.phone}</span></div>
+                    <div class="item-row"><span class="item-label">Tipo:</span><span class="item-value">${translatePhoneType(p.phone_type)}</span></div>
+                    <div class="item-row"><span class="item-label">País:</span><span class="item-value">${p.country_code || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Área:</span><span class="item-value">${p.area_code || 'N/A'}</span></div>
                 </div>
                 <div class="item-actions">
-                    <button class="edit-btn" onclick="openPhoneEditModal(${p.phone_id}, '${p.phone}', '${p.phone_type}', '${p.country_code || ''}', '${p.area_code || ''}')">Edit</button>
-                    <button class="delete-btn" onclick="deletePhone(${p.phone_id})">Delete</button>
+                    <button class="edit-btn" onclick="openPhoneEditModal(${p.phone_id}, '${p.phone}', '${p.phone_type}', '${p.country_code || ''}', '${p.area_code || ''}')">Editar</button>
+                    <button class="delete-btn" onclick="deletePhone(${p.phone_id})">Eliminar</button>
                 </div>
             `;
             list.appendChild(li);
@@ -206,14 +237,14 @@ async function loadAddresses() {
             const li = document.createElement("li");
             li.innerHTML = `
                 <div class="item-info">
-                    <div class="item-row"><span class="item-label">Address:</span><span class="item-value">${a.address_line || 'N/A'}</span></div>
-                    <div class="item-row"><span class="item-label">City:</span><span class="item-value">${a.city || 'N/A'}</span></div>
-                    <div class="item-row"><span class="item-label">State:</span><span class="item-value">${a.state || 'N/A'}</span></div>
-                    <div class="item-row"><span class="item-label">ZIP:</span><span class="item-value">${a.zip_postcode || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Dirección:</span><span class="item-value">${a.address_line || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Ciudad:</span><span class="item-value">${a.city || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Estado:</span><span class="item-value">${a.state || 'N/A'}</span></div>
+                    <div class="item-row"><span class="item-label">Código Postal:</span><span class="item-value">${a.zip_postcode || 'N/A'}</span></div>
                 </div>
                 <div class="item-actions">
-                    <button class="edit-btn" onclick="openAddressEditModal(${a.address_id}, '${(a.address_line || '').replace(/'/g, "\\'")}', '${(a.city || '').replace(/'/g, "\\'")}', '${(a.state || '').replace(/'/g, "\\'")}', '${(a.zip_postcode || '').replace(/'/g, "\\'")}')">Edit</button>
-                    <button class="delete-btn" onclick="deleteAddress(${a.address_id})">Delete</button>
+                    <button class="edit-btn" onclick="openAddressEditModal(${a.address_id}, '${(a.address_line || '').replace(/'/g, "\\'")}', '${(a.city || '').replace(/'/g, "\\'")}', '${(a.state || '').replace(/'/g, "\\'")}', '${(a.zip_postcode || '').replace(/'/g, "\\'")}')">Editar</button>
+                    <button class="delete-btn" onclick="deleteAddress(${a.address_id})">Eliminar</button>
                 </div>
             `;
             list.appendChild(li);
@@ -245,7 +276,7 @@ async function saveEditEmail() {
     });
 
     if (!resp.ok) {
-        alert("Failed to update email");
+        alert("No se pudo actualizar el correo");
     } else {
         closeEmailModal();
         loadEmails();
@@ -253,14 +284,14 @@ async function saveEditEmail() {
 }
 
 async function deleteEmail(email) {
-    if (!confirm(`Delete email ${email}?`)) return;
+    if (!confirm(`¿Eliminar el correo ${email}?`)) return;
     
     const resp = await fetch(`${API_BASE}/emails/${email}`, {
         method: "DELETE"
     });
 
     if (!resp.ok) {
-        alert("Failed to delete email");
+        alert("No se pudo eliminar el correo");
     } else {
         loadEmails();
     }
@@ -299,7 +330,7 @@ async function saveEditPhone() {
     });
 
     if (!resp.ok) {
-        alert("Failed to update phone");
+        alert("No se pudo actualizar el teléfono");
     } else {
         closePhoneModal();
         loadPhones();
@@ -307,14 +338,14 @@ async function saveEditPhone() {
 }
 
 async function deletePhone(phoneId) {
-    if (!confirm("Delete this phone?")) return;
+    if (!confirm("¿Eliminar este teléfono?")) return;
     
     const resp = await fetch(`${API_BASE}/phones/${phoneId}`, {
         method: "DELETE"
     });
 
     if (!resp.ok) {
-        alert("Failed to delete phone");
+        alert("No se pudo eliminar el teléfono");
     } else {
         loadPhones();
     }
@@ -354,7 +385,7 @@ async function saveEditAddress() {
     });
 
     if (!resp.ok) {
-        alert("Failed to update address");
+        alert("No se pudo actualizar la dirección");
     } else {
         closeAddressModal();
         loadAddresses();
@@ -362,14 +393,14 @@ async function saveEditAddress() {
 }
 
 async function deleteAddress(addressId) {
-    if (!confirm("Delete this address?")) return;
+    if (!confirm("¿Eliminar esta dirección?")) return;
     
     const resp = await fetch(`${API_BASE}/addresses/${addressId}`, {
         method: "DELETE"
     });
 
     if (!resp.ok) {
-        alert("Failed to delete address");
+        alert("No se pudo eliminar la dirección");
     } else {
         loadAddresses();
     }
