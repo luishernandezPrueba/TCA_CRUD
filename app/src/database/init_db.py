@@ -25,7 +25,7 @@ def init_db():
 
     parts = sync_url.rsplit('/', 1)
     base_url = parts[0]
-    db_name = parts[1].split('?')[0] if len(parts) > 1 else 'students'  
+    db_name = "students"
     
 
     engine = create_engine(base_url)
@@ -33,7 +33,6 @@ def init_db():
     with engine.connect() as conn:
         conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {db_name}"))
         conn.commit()
-        print(f"Database '{db_name}' ensured")
     
     # Now create tables in the actual database
     table_engine = create_engine(sync_url)
