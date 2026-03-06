@@ -43,7 +43,7 @@ app/
 ### Prerrequisitos
 
 - Python 3.11+
-- MySQL 8.0+
+- MySQL
 
 ### Pasos
 
@@ -65,25 +65,35 @@ app/
    pip install -r requirements.txt
    ```
 
-4. **Configurar variables de entorno**
+4. **Crear base de datos**
+
+   Iniciar sesión en MySQL:
+
+   ```bash
+   mysql -u root -p
+
+   CREATE DATABASE students;
+   ```
+   
+5. **Configurar variables de entorno**
    
    Crear archivo `app/src/.env`:
    ```env
    DATABASE_URL=mysql+asyncmy://usuario:contraseña@localhost:3306/students
    ```
 
-5. **Inicializar la base de datos**
+6. **Generar las tablas**
    ```bash
    cd src
    python -c "from database.init_db import init_db; init_db()"
    ```
 
-6. **Ejecutar la aplicación**
+7. **Ejecutar la aplicación**
    ```bash
    uvicorn app:app --reload
    ```
 
-7. **Acceder a la aplicación**
+8. **Acceder a la aplicación**
    - Frontend: http://localhost:8000
    - API Docs: http://localhost:8000/docs
 
@@ -171,5 +181,4 @@ app/
 - ✅ Modificación de estudiante y datos relacionados
 - ✅ Eliminación de estudiante e información relacionada
 - ✅ Eliminación de elementos asociados individualmente
-
 
