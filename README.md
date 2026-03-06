@@ -43,7 +43,7 @@ app/
 ### Prerrequisitos
 
 - Python 3.11+
-- MySQL 8.0+
+- MySQL
 
 ### Pasos
 
@@ -93,7 +93,7 @@ app/
    uvicorn app:app --reload
    ```
 
-7. **Acceder a la aplicación**
+8. **Acceder a la aplicación**
    - Frontend: http://localhost:8000
    - API Docs: http://localhost:8000/docs
 
@@ -181,5 +181,4 @@ app/
 - ✅ Modificación de estudiante y datos relacionados
 - ✅ Eliminación de estudiante e información relacionada
 - ✅ Eliminación de elementos asociados individualmente
-
 
