@@ -65,20 +65,30 @@ app/
    pip install -r requirements.txt
    ```
 
-4. **Configurar variables de entorno**
+4. **Crear base de datos**
+
+   Iniciar sesión en MySQL:
+
+   ```bash
+   mysql -u root -p
+
+   CREATE DATABASE students;
+   ```
+   
+5. **Configurar variables de entorno**
    
    Crear archivo `app/src/.env`:
    ```env
    DATABASE_URL=mysql+asyncmy://usuario:contraseña@localhost:3306/students
    ```
 
-5. **Inicializar la base de datos**
+6. **Generar las tablas**
    ```bash
    cd src
    python -c "from database.init_db import init_db; init_db()"
    ```
 
-6. **Ejecutar la aplicación**
+7. **Ejecutar la aplicación**
    ```bash
    uvicorn app:app --reload
    ```
