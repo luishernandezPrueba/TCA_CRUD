@@ -71,6 +71,24 @@ function translateGender(gender) {
     return GENDER_ES[gender] || gender;
 }
 
+function isOnlyDigits(value) {
+    return /^\d+$/.test(value);
+}
+
+function validateNumericFields(fields) {
+    for (const { value, label, required } of fields) {
+        if (required && !value) {
+            alert(`${label} es requerido.`);
+            return false;
+        }
+        if (value && !isOnlyDigits(value)) {
+            alert(`${label} debe contener solo números.`);
+            return false;
+        }
+    }
+    return true;
+}
+
 function toggleForm(formId) {
     const form = document.getElementById(formId);
     form.style.display = form.style.display === "none" ? "flex" : "none";
@@ -116,11 +134,21 @@ async function createEmail(e) {
 async function createPhone(e) {
     e.preventDefault();
 
+    const phone = document.getElementById("phoneNumber").value;
+    const countryCode = document.getElementById("countryCode").value;
+    const areaCode = document.getElementById("areaCode").value;
+
+    if (!validateNumericFields([
+        { value: phone, label: "Teléfono", required: true },
+        { value: countryCode, label: "Código de país" },
+        { value: areaCode, label: "Código de área" }
+    ])) return;
+
     const data = {
-        phone: document.getElementById("phoneNumber").value,
+        phone: phone,
         phone_type: document.getElementById("phoneType").value,
-        country_code: document.getElementById("countryCode").value,
-        area_code: document.getElementById("areaCode").value,
+        country_code: countryCode,
+        area_code: areaCode,
         student_id: studentId
     };
 
@@ -144,11 +172,14 @@ async function createPhone(e) {
 async function createAddress(e) {
     e.preventDefault();
 
+    const zip = document.getElementById("zip").value;
+    if (!validateNumericFields([{ value: zip, label: "Código postal" }])) return;
+
     const data = {
         address_line: document.getElementById("addressLine").value,
         city: document.getElementById("city").value,
         state: document.getElementById("state").value,
-        zip_postcode: document.getElementById("zip").value,
+        zip_postcode: zip,
         student_id: studentId
     };
 
@@ -361,6 +392,12 @@ async function saveEditPhone() {
     const countryCode = document.getElementById("editCountryCode").value;
     const areaCode = document.getElementById("editAreaCode").value;
 
+    if (!validateNumericFields([
+        { value: phone, label: "Teléfono", required: true },
+        { value: countryCode, label: "Código de país" },
+        { value: areaCode, label: "Código de área" }
+    ])) return;
+
     const resp = await fetch(`${API_BASE}/phones/${phoneId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -416,6 +453,8 @@ async function saveEditAddress() {
     const city = document.getElementById("editCity").value;
     const state = document.getElementById("editState").value;
     const zip = document.getElementById("editZip").value;
+
+    if (!validateNumericFields([{ value: zip, label: "Código postal" }])) return;
 
     const resp = await fetch(`${API_BASE}/addresses/${addressId}`, {
         method: "PATCH",
